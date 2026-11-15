@@ -1,0 +1,24 @@
+services:
+  history-game:
+    build:
+      context: ../history-game
+      dockerfile: Dockerfile
+    container_name: chronoquest-history-game
+    ports:
+      - "8000:8000"
+    environment:
+      HISTORY_GAME_DATABASE_URL: "sqlite+aiosqlite:////app/data/history_game.db"
+      HISTORY_GAME_STATIC_DIR: "/app/frontend/dist"
+      HISTORY_GAME_SEED_ON_STARTUP: "true"
+    volumes:
+      - history_game_data:/app/data
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+volumes:
+  history_game_data:

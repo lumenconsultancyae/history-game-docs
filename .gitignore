@@ -2,10 +2,10 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.pytest_cache/
+.coverage
 node_modules/
-dist/
-build/
-.env
-.DS_Store
 *.db
-*.sqlite3
+*.db-shm
+*.db-wal
+.DS_Store
